@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <div class="logo">
+        <h1>Ktu do jet nje logo e bukur Endi :)</h1>
+        <h2>Jemi Under Construction</h2>
+    </div>
+    <div class="main">  	
+    <input type="checkbox" id="chk" aria-hidden="true" >
+    <div class="login">
+        <form action="/loginRegister" method="POST">
+            <label for="chk" aria-hidden="true">Login</label>
+            <input type="email" name="email" placeholder="Email" required>
+            {% with messages = get_flashed_messages(category_filter=["emailLogin"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="password" name="password" placeholder="Password" required>
+            {% with messages = get_flashed_messages(category_filter=["passwordLogin"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="hidden" name="action" value="login">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div class="signup">
+        <form action="/loginRegister" method="POST">
+            <label for="chk" aria-hidden="true">Sign up</label>
+            <input type="text" name="first_name" placeholder="First Name" required>
+            {% with messages = get_flashed_messages(category_filter=["first_name"]) %}   
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            {% with messages = get_flashed_messages(category_filter=["last_name"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="email" name="email" placeholder="Email" required>
+            {% with messages = get_flashed_messages(category_filter=["emailSignUp"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="password" name="password" placeholder="Password" required>
+            {% with messages = get_flashed_messages(category_filter=["password"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            {% with messages = get_flashed_messages(category_filter=["passwordConfirm"]) %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-red text-center">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <input type="hidden" name="action" value="register">
+            <button type="submit">Sign up</button>
+        </form>
+    </div>
+    </div>
+</body>
+</html>
