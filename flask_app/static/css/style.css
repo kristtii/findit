@@ -7,11 +7,13 @@ body {
     min-height: 100vh;
     font-family: 'Jost', sans-serif;
     background: linear-gradient(to bottom, #e5df37, #f0e726, #ffef61);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 }
 
 .main {
     width: 350px;
-    height: 500px;
+    height: 550px;
     overflow: hidden;
     background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
     border-radius: 10px;
@@ -92,7 +94,7 @@ button:hover {
 }
 
 #chk:checked~.signup {
-    transform: translateY(-500px);
+    transform: translateY(-550px);
 }
 
 #chk:checked~.signup label {
@@ -126,4 +128,23 @@ button:hover {
 
 .text-center {
     text-align: center;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.error-border {
+    border: 3px solid red !important;
+}
+
+.logo h1 {
+    font-size: 86px;
+    position: relative;
+    top: -90px;
+}
+
+.logo img {
+    width: 360px;
+    position: relative;
+    top: 100px;
+    left: 45px;
 }
