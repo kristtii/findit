@@ -4,7 +4,6 @@ from flask import flash
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-
 class User:
     def __init__(self, data):
         self.id = data['id']
@@ -43,11 +42,21 @@ class User:
                 users.append(user)
             return users
         return users
-
+    
     @classmethod
     def create_user(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, password) VALUES ( %(first_name)s, %(last_name)s,%(email)s,%(password)s);"
+        query = "INSERT INTO users (first_name, last_name, email, password, verification_code) VALUES ( %(first_name)s, %(last_name)s,%(email)s,%(password)s,%(verification_code)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
+
+    @classmethod
+    def updateVerificationCode(cls, data):
+        query = "UPDATE users SET verification_code = %(verification_code)s WHERE users.id = %(user_id)s;"
+        return connectToMySQL(cls.db_name).query_db(query, data) 
+    
+    @classmethod
+    def activateAccount(cls, data):
+        query = "UPDATE users set is_verified = 1 WHERE users.id = %(user_id)s;"
+        return connectToMySQL(cls.db_name).query_db(query, data)  
 
     @classmethod
     def update_user(cls, data):
@@ -79,16 +88,16 @@ class User:
             is_valid = False
         return is_valid
 
-    @staticmethod
-    def validate_user_update(user):
-        is_valid = True
-        if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address!", 'emailSignUp')
-            is_valid = False
-        if len(user['first_name']) < 2:
-            flash('First name must be more than 2 characters', 'firstName')
-            is_valid = False
-        if len(user['last_name']) < 2:
-            flash('Last name must be more than 2 characters', 'lastName')
-            is_valid = False
-        return is_valid
+    # @staticmethod
+    # def validate_user_update(user):
+    #     is_valid = True
+    #     if not EMAIL_REGEX.match(user['email']):
+    #         flash("Invalid email address!", 'emailSignUp')
+    #         is_valid = False
+    #     if len(user['first_name']) < 2:
+    #         flash('First name must be more than 2 characters', 'firstName')
+    #         is_valid = False
+    #     if len(user['last_name']) < 2:
+    #         flash('Last name must be more than 2 characters', 'lastName')
+    #         is_valid = False
+    #     return is_valid
