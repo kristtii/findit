@@ -51,7 +51,6 @@ def login_register():
             'password': bcrypt.generate_password_hash(request.form['password']),
             'verification_code': verificationCode
         }
-        print(data)
         User.create_user(data)
         
         LOGIN = ADMINEMAIL
