@@ -100,38 +100,39 @@
 		<main>
 			{% for car in cars %}
 			<div class="card">
+				{% set carImages = car.images.split(',') %}
 				<img
-					src="static/UPLOADED_FOLDER/{{car.images}}"
+					src="static/UPLOADED_FOLDER/{{ carImages[0] }}"
 					alt="car"
 					class="card__image"
 					width="800px"
 					height="500px" />
 				<div class="card__content">
 					<p class="card__title">
-						{{car.car_make}} {{car.car_model}}
+						{{ car.car_make }} {{ car.car_model }}
 					</p>
 					<p class="card__description">
-						Engine: {{car.car_engine}} <br />
-						Fuel: {{car.car_fuel}} <br />
-						Transmission: {{car.car_transmissions}} <br />
-						Drive: {{car.car_drive}}<br />
-						Mileage: {{car.car_mileage}} <br />
-						Price: {{car.car_price}}<br />
+						Engine: {{ car.car_engine }} <br />
+						Fuel: {{ car.car_fuel }} <br />
+						Transmission: {{ car.car_transmissions }} <br />
+						Drive: {{ car.car_drive }}<br />
+						Mileage: {{ car.car_mileage }} <br />
+						Price: {{ car.car_price }}<br />
 					</p>
 					<div class="btn-group">
 						<a
-							href="/cars/{{car.id}}"
+							href="/cars/{{ car.id }}"
 							class="btn btn-outline-primary"
 							>Details</a
 						>
-						{% if car.user_id == loggedUser.id %}
+						{% if car.user_id == loggedUser.user_id %}
 						<a
-							href="/cars/edit/{{car.id}}"
+							href="/cars/edit/{{ car.id }}"
 							class="btn btn-outline-danger"
 							>Edit</a
 						>
 						<a
-							href="/cars/delete/{{car.id}}"
+							href="/cars/delete/{{ car.id }}"
 							class="btn btn-outline-danger"
 							>Delete</a
 						>
@@ -139,7 +140,6 @@
 					</div>
 				</div>
 			</div>
-
 			{% endfor %}
 		</main>
 	</body>

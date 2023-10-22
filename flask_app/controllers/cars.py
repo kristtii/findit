@@ -11,7 +11,7 @@ from flask_cors import CORS
 CORS(app)
 from werkzeug.utils import secure_filename
 
-# Check if the format is right 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -38,21 +38,17 @@ def createCar():
                 flash(f'{display_name} is required!', 'carImage')
                 return redirect(request.referrer)
 
-        if not request.files['car_images']:
-            flash('Car image is required!', 'carImage')
-            return redirect(request.referrer)
+        images = request.files.getlist('car_images')
+        image_filenames = []
 
-        image = request.files['car_images']
-        if not allowed_file(image.filename):
-            flash('Image should be in png, jpg, jpeg format!', 'carImage')
-            return redirect(request.referrer)
-
-        if image and allowed_file(image.filename):
-            filename1 = secure_filename(image.filename)
-            time = datetime.now().strftime("%d%m%Y%S%f")
-            time += filename1
-            filename1 = time
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
+        for image in images:
+            if image and allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                time = datetime.now().strftime("%d%m%Y%S%f")
+                time += filename
+                filename = time
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image_filenames.append(filename)
 
         data = {
             'car_make': request.form['car_make'],
@@ -63,9 +59,70 @@ def createCar():
             'car_drive': request.form['car_drive'],
             'car_mileage': request.form['car_mileage'],
             'car_price': request.form['car_price'],
-            'car_images': filename1,
+            'car_images': ','.join(image_filenames),  # Combine image filenames into a comma-separated string
             'car_description': request.form['car_description'],
+            'user_id': session['user_id']
         }
         Car.createCarPost(data)
         return redirect('/dashboard')
     return redirect('/')
+
+
+@app.route("/cars/edit/<int:id>")
+def editCar(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    loggedUser = User.get_user_by_id(data)
+    car = Car.get_car_by_id(data)
+    print(car)
+    if loggedUser['id'] == car['user_id']:
+        return render_template('editCar.html', car=car, loggedUser=loggedUser)
+    return redirect(request.referrer)
+
+@app.route('/edit/car/<int:id>', methods=['POST'])
+def updatecar(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    if not Car.validate_edit_car(request.form):
+        return redirect(request.referrer)
+
+    data = {
+            'car_make': request.form['car_make'],
+            'car_model': request.form['car_model'],
+            'car_engine': request.form['car_engine'],
+            'car_fuel': request.form['car_fuel'],
+            'car_transmissions': request.form['car_transmissions'],
+            'car_drive': request.form['car_drive'],
+            'car_mileage': request.form['car_mileage'],
+            'car_price': request.form['car_price'],
+            'car_description': request.form['car_description'],
+            'user_id': session['user_id'],
+            'car_id': id
+        }
+    loggedUser = User.get_user_by_id(data)
+    car = Car.get_car_by_id(data)
+    if loggedUser['id'] == car['user_id']:
+        Car.update_car(data)
+        flash('Update succesfull!', 'updateDone')
+        return redirect(f'/cars/edit/{id}')
+    return redirect('/')
+
+@app.route('/cars/delete/<int:id>')
+def deletePost(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    loggedUser = User.get_user_by_id(data)
+    car = Car.get_car_by_id(data)
+    if loggedUser['id'] == car['user_id']:
+        Car.delete_car_likes(data)
+        Car.delete_car(data)
+        return redirect(request.referrer)
+    return redirect(request.referrer)

@@ -105,7 +105,11 @@
 			<h2 class="text-center">Add Car</h2>
 			<div class="form-row">
 				<label for="car_images">Car Image:</label>
-				<input type="file" class="form-control" name="car_images" />
+				<input
+					type="file"
+					class="form-control"
+					name="car_images"
+					multiple />
 			</div>
 			{% with messages =
 			get_flashed_messages(category_filter=["carImage"]) %} {% if messages
@@ -119,11 +123,13 @@
 					class="form-control"
 					name="car_make"
 					placeholder="Enter car Make" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_make"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Make"]) %}
-			{% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
+
 			<div class="form-row">
 				<label for="car_model">Model:</label>
 				<input
@@ -131,11 +137,12 @@
 					class="form-control"
 					name="car_model"
 					placeholder="Enter car Model" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_model"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Model"])
-			%} {% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_engine">Engine:</label>
@@ -144,11 +151,12 @@
 					class="form-control"
 					name="car_engine"
 					placeholder="Enter car Engine" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_engine"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Engine"])
-			%} {% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_fuel">Fuel:</label>
@@ -157,25 +165,26 @@
 					class="form-control"
 					name="car_fuel"
 					placeholder="Enter car Fuel" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_fuel"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Fuel"]) %}
-			{% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
-				<label for="car_transmissions">Transmissions:</label>
+				<label for="car_transmissions">Transmission:</label>
 				<input
 					type="text"
 					class="form-control"
 					name="car_transmissions"
-					placeholder="Enter car Transmissions" />
+					placeholder="Enter car Transmission" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_transmissions"]) %}
+				{% if messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages =
-			get_flashed_messages(category_filter=["Transmissions"]) %} {% if
-			messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_drive">Drive:</label>
@@ -184,11 +193,12 @@
 					class="form-control"
 					name="car_drive"
 					placeholder="Enter car Drive" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_drive"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Drive"])
-			%} {% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_mileage">Mileage:</label>
@@ -197,11 +207,12 @@
 					class="form-control"
 					name="car_mileage"
 					placeholder="Enter car Mileage" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_mileage"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Mileage"])
-			%} {% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_price">Price:</label>
@@ -210,11 +221,12 @@
 					class="form-control"
 					name="car_price"
 					placeholder="Enter car Price" />
+				{% with messages =
+				get_flashed_messages(category_filter=["car_price"]) %} {% if
+				messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
-			{% with messages = get_flashed_messages(category_filter=["Price"])
-			%} {% if messages %} {% for message in messages %}
-			<p class="text-danger text-center">{{ message }}</p>
-			{% endfor %} {% endif %} {% endwith %}
 
 			<div class="form-row">
 				<label for="car_description">Description:</label>
@@ -223,6 +235,11 @@
 					class="form-control"
 					name="car_description"
 					placeholder="Enter car Description"></textarea>
+				{% with messages =
+				get_flashed_messages(category_filter=["car_description"]) %} {%
+				if messages %} {% for message in messages %}
+				<p class="text-danger text-center">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
 			</div>
 
 			<button class="mt-2 btn btn-success">Post Car</button>
