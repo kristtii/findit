@@ -30,13 +30,9 @@ def addCar():
 
 @app.route('/create/car', methods=['POST'])
 def createCar():
-    if 'user_id' in session:
-        required_fields = {'car_make': 'Make', 'car_model': 'Model', 'car_engine': 'Engine', 'car_fuel': 'Fuel', 'car_transmissions': 'Transmissions', 'car_drive': 'Drive', 'car_mileage': 'Mileage', 'car_price': 'Price'}
-
-        for field, display_name in required_fields.items():
-            if not request.form.get(field):
-                flash(f'{display_name} is required!', 'carImage')
-                return redirect(request.referrer)
+    if 'user_id' in session:        
+        
+        
 
         images = request.files.getlist('car_images')
         image_filenames = []
@@ -49,6 +45,12 @@ def createCar():
                 filename = time
                 image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 image_filenames.append(filename)
+                
+        if not Car.validateImage(image_filenames):
+            return redirect(request.referrer)
+        
+        if not Car.validate_car(request.form):
+            return redirect(request.referrer)
 
         data = {
             'car_make': request.form['car_make'],
@@ -78,7 +80,6 @@ def editCar(id):
     }
     loggedUser = User.get_user_by_id(data)
     car = Car.get_car_by_id(data)
-    print(car)
     if loggedUser['id'] == car['user_id']:
         return render_template('editCar.html', car=car, loggedUser=loggedUser)
     return redirect(request.referrer)
@@ -87,7 +88,7 @@ def editCar(id):
 def updatecar(id):
     if 'user_id' not in session:
         return redirect('/')
-    if not Car.validate_edit_car(request.form):
+    if not Car.validate_car(request.form):
         return redirect(request.referrer)
 
     data = {
@@ -122,7 +123,49 @@ def deletePost(id):
     loggedUser = User.get_user_by_id(data)
     car = Car.get_car_by_id(data)
     if loggedUser['id'] == car['user_id']:
-        Car.delete_car_likes(data)
+        Car.delete_car_parkedcars(data)
         Car.delete_car(data)
         return redirect(request.referrer)
     return redirect(request.referrer)
+
+@app.route('/save/<int:id>')
+def save(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    usersWhoParkedThiscar = Car.getUserWhoParkedCars(data)
+    if session['user_id'] not in usersWhoParkedThiscar:
+        Car.save(data)
+    return redirect(request.referrer)
+
+
+@app.route('/unsave/<int:id>')
+def removeSaved(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    usersWhoParkedThiscar = Car.getUserWhoParkedCars(data)
+    if session['user_id'] in usersWhoParkedThiscar:
+        Car.unsave(data)
+    return redirect(request.referrer)
+
+@app.route('/saved')
+def savedCars():
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id']
+    }
+    parkedCars = Car.getAllParkedCarsByUser(data)
+    print(parkedCars, 'parked cars')
+    return render_template('saved.html', parkedCars=parkedCars)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')

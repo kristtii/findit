@@ -779,3 +779,74 @@ sidenav ul li div {
 .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+.no-cars {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.card-a {
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+    width: 65%;
+    height: auto;
+    border-radius: 30px;
+    color: #fbff08;
+    background: #212121;
+    box-shadow: 5px 5px 5px rgb(225, 228, 85);
+}
+
+.add-car {
+    background-color: #000 !important;
+    color: #fbff08;
+}
+
+.add-car div label {
+    margin-top: 10px;
+}
+
+.add-car div input {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #212121;
+    height: 50px;
+}
+
+.add-car div input {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #212121;
+    height: 50px;
+}
+
+.add-car div textarea {
+    background-color: #000 !important;
+    color: #fbff08;
+    border: 1px solid #212121;
+}
+
+#file-input {
+    width: 100%;
+    max-width: 100%;
+    color: #444;
+    padding: 2px;
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #212121;
+}
+
+#file-input::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #fbff08;
+    padding: 17px 20px;
+
+    color: #000;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+#file-input::file-selector-button:hover {
+    background: #0d45a5;
+}

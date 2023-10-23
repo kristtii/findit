@@ -86,7 +86,7 @@
 						</div>
 					</li>
 				</a>
-				<a href="/saved">
+				<a href="/">
 					<li class="saved-li">
 						<div class="mail-icon">
 							<div class="mail-base">
@@ -98,7 +98,20 @@
 			</ul>
 		</sidenav>
 		<main>
-			{% for car in cars %}
+			{% if parkedCars|length < 1 %}
+			<div class="m-auto text-center mt-5">
+				<p class="no-cars">
+					You have no saved cars
+				</p>
+				<a class="fancy" href="/logout">
+					<span class="top-key"></span>
+					<span class="text color-black">Go Back</span>
+					<span class="bottom-key-1"></span>
+					<span class="bottom-key-2"></span>
+				</a>
+			</div>
+			{% endif %}
+			{% for car in parkedCars %}
 			<div class="card">
 				{% set carImages = car.images.split(',') %}
 				<img
@@ -124,29 +137,10 @@
 							href="/cars/{{ car.id }}"
 							class="btn btn-outline-primary"
 							>Details</a
-						>
-						{% if car.user_id == loggedUser.id %}
-						<a
-							href="/cars/edit/{{ car.id }}"
-							class="btn btn-outline-danger"
-							>Edit</a
-						>
-						<a
-							href="/cars/delete/{{ car.id }}"
-							class="btn btn-outline-danger"
-							>Delete</a
-						>
-						{% endif %}
-						
-						{% if car.id in parkedCars %}
+						>						
 						<a class="btn btn-danger" href="/unsave/{{car.id}}"
 							>Remove Saved Car</a
 						>
-						{% else %}
-						<a class="btn btn-primary" href="/save/{{car.id}}"
-							>Save Car</a
-						>
-						{% endif %}
 					</div>
 				</div>
 			</div>

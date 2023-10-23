@@ -19,7 +19,7 @@ class Car:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT carposts.id as id, carposts.car_make as car_make, carposts.car_model as car_model, carposts.car_engine as car_engine, carposts.car_fuel as car_fuel, carposts.car_transmissions as car_transmissions, carposts.car_drive as car_drive, carposts.car_description as car_description, carposts.car_mileage as car_mileage, carposts.car_price as car_price, carposts.car_images as images, COUNT(parkedcars.id) as parkedcars FROM carposts LEFT JOIN parkedcars ON carposts.id = parkedcars.carPost_id GROUP BY carposts.id;"
+        query = "SELECT carposts.id as id, carposts.car_make as car_make, carposts.car_model as car_model, carposts.car_engine as car_engine, carposts.car_fuel as car_fuel, carposts.car_transmissions as car_transmissions, carposts.car_drive as car_drive, carposts.car_description as car_description, carposts.car_mileage as car_mileage, carposts.car_price as car_price, carposts.car_images as images, carposts.user_id as user_id, COUNT(parkedcars.id) as parkedcars FROM carposts LEFT JOIN parkedcars ON carposts.id = parkedcars.carPost_id GROUP BY carposts.id;"
         results = connectToMySQL(cls.db_name).query_db(query)
         cars = []
         if results:
@@ -47,7 +47,7 @@ class Car:
         return connectToMySQL(cls.db_name).query_db(query, data)
     
     @classmethod
-    def delete_car_likes(cls, data):
+    def delete_car_parkedcars(cls, data):
         query = "DELETE from parkedcars WHERE car_id = %(car_id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
@@ -56,15 +56,47 @@ class Car:
         query = "DELETE FROM carposts WHERE id = %(car_id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
         
+    @classmethod
+    def getUserWhoParkedCars(cls, data):
+        query = "SELECT parkedcars.carPost_id as id from parkedcars WHERE user_id = %(user_id)s;"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        parkedCars = []
+        if results:
+            for car in results:
+                parkedCars.append(car['id'])
+            return parkedCars
+        return parkedCars
+    
+    @classmethod
+    def save(cls, data):
+        query = "INSERT INTO parkedcars (user_id, carPost_id) VALUES ( %(user_id)s, %(car_id)s);"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+
+    @classmethod
+    def unsave(cls, data):
+        query = "DELETE FROM parkedcars WHERE user_id = %(user_id)s AND carPost_id = %(car_id)s"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    @classmethod
+    def getParkedCarsByUser(cls, data):
+        query = "SELECT * FROM parkedcars WHERE user_id = %(user_id)s"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
+    @classmethod
+    def getAllParkedCarsByUser(cls, data):
+        query = "SELECT parkedcars.id as id, carposts.car_make as car_make, carposts.car_model as car_model, carposts.car_engine as car_engine, carposts.car_fuel as car_fuel, carposts.car_transmissions as car_transmissions, carposts.car_drive as car_drive, carposts.car_description as car_description, carposts.car_mileage as car_mileage, carposts.car_price as car_price, carposts.car_images as images, carposts.user_id as user_id FROM parkedcars LEFT JOIN carposts ON parkedcars.carPost_id = carposts.id WHERE parkedcars.user_id = %(user_id)s;"
+        return connectToMySQL(cls.db_name).query_db(query, data)
+    
     @staticmethod
     def validateImage(data):
         is_valid = True
-        if not data['car_images']:
+        if len(data) < 1:
             flash('Please select at least one image', 'car_images')
             is_valid = False 
-    
+        return is_valid
+              
     @staticmethod
-    def validate_edit_car(data):
+    def validate_car(data):
         is_valid = True
 
         if not data['car_make']:

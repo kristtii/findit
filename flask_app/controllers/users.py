@@ -160,7 +160,8 @@ def dashboard():
     if not loggedUser:
         return redirect('/logout')
     cars = Car.get_all()
-    return render_template('dashboard.html', loggedUser=loggedUser, cars=cars)
+    carsSaved = Car.getUserWhoParkedCars(loggedUserData)
+    return render_template('dashboard.html', loggedUser=loggedUser, cars=cars, parkedCars=carsSaved)
 
 @app.route('/logout')
 def logout():

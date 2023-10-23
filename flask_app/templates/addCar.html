@@ -76,7 +76,7 @@
 						</div>
 					</li>
 				</a>
-				<a href="/add-car">
+				<a href="/add/car">
 					<li class="add-li">
 						<div class="work-icon">
 							<div class="paper"></div>
@@ -99,7 +99,7 @@
 		</sidenav>
 		<form
 			enctype="multipart/form-data"
-			class="w-50 m-auto p-5 border rounded bg-light mt-3"
+			class="add-car w-50 m-auto p-5 border rounded mt-3"
 			action="/create/car"
 			method="POST">
 			<h2 class="text-center">Add Car</h2>
@@ -107,12 +107,13 @@
 				<label for="car_images">Car Image:</label>
 				<input
 					type="file"
-					class="form-control"
+					class="form-control align-self-center"
+					id="file-input"
 					name="car_images"
 					multiple />
 			</div>
 			{% with messages =
-			get_flashed_messages(category_filter=["carImage"]) %} {% if messages
+			get_flashed_messages(category_filter=["car_images"]) %} {% if messages
 			%} {% for message in messages %}
 			<p class="text-danger text-center">{{ message }}</p>
 			{% endfor %} {% endif %} {% endwith %}
@@ -242,7 +243,12 @@
 				{% endfor %} {% endif %} {% endwith %}
 			</div>
 
-			<button class="mt-2 btn btn-success">Post Car</button>
+			<button class="fancy mt-3">
+				<span class="top-key"></span>
+				<span class="text">Add Car</span>
+				<span class="bottom-key-1"></span>
+				<span class="bottom-key-2"></span>
+			</button>
 		</form>
 	</body>
 </html>

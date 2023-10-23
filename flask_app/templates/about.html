@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Dashboard</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static', filename = 'css/dashboard_style.css') }}" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			crossorigin="anonymous" />
+	</head>
+	<body>
+		<nav class="navbar">
+			<h1 class=""><a href="/dashboard">findit.</a></h1>
+			<div class="d-flex">
+				<div class="input-wrapper">
+					<button class="icon">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							height="25px"
+							width="25px">
+							<path
+								stroke-linejoin="round"
+								stroke-linecap="round"
+								stroke-width="1.5"
+								stroke="#fff"
+								d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"></path>
+							<path
+								stroke-linejoin="round"
+								stroke-linecap="round"
+								stroke-width="1.5"
+								stroke="#fff"
+								d="M22 22L20 20"></path>
+						</svg>
+					</button>
+					<input
+						placeholder="Search by model"
+						class="input"
+						name="text"
+						type="text" />
+				</div>
+				<a class="fancy" href="/logout">
+					<span class="top-key"></span>
+					<span class="text">Logout</span>
+					<span class="bottom-key-1"></span>
+					<span class="bottom-key-2"></span>
+				</a>
+			</div>
+		</nav>
+		<sidenav>
+			<ul>
+				<a href="/">
+					<li class="home-li">
+						<div class="home-icon">
+							<div class="roof">
+								<div class="roof-edge"></div>
+							</div>
+							<div class="front"></div>
+						</div>
+					</li>
+				</a>
+				<a href="/about">
+					<li class="about-li">
+						<div class="about-icon">
+							<div class="head">
+								<div class="eyes"></div>
+								<div class="beard"></div>
+							</div>
+						</div>
+					</li>
+				</a>
+				<a href="/add/car">
+					<li class="add-li">
+						<div class="work-icon">
+							<div class="paper"></div>
+							<div class="lines"></div>
+							<div class="lines"></div>
+							<div class="lines"></div>
+						</div>
+					</li>
+				</a>
+				<a href="/saved">
+					<li class="saved-li">
+						<div class="mail-icon">
+							<div class="mail-base">
+								<div class="mail-top"></div>
+							</div>
+						</div>
+					</li>
+				</a>
+			</ul>
+		</sidenav>
+        <div class="card-a">
+            <h2>About FindIt - Your Ultimate Desktop Car Shopping Experience</h2>
+            <p class="lead text-white">Welcome to FindIt, your premier destination for all your car-buying needs. At FindIt, we are committed to providing you with the ultimate desktop-based car shopping experience, offering you a powerful and user-friendly platform to find, save, and manage your dream cars.</p>
+            <h3>Our Mission</h3>
+            <p class="lead text-white">At FindIt, our mission is to empower car enthusiasts, buyers, and sellers alike with a comprehensive and efficient tool that simplifies the process of finding and managing your desired vehicles. We understand the importance of making informed decisions, and our platform is designed to put the power of choice right at your fingertips.</p>
+            <h3>Discover, Save, and Manage with Ease</h3>
+            <p class="lead text-white">With FindIt, your car search becomes a breeze. Our desktop-based platform allows you to search through an extensive database of cars, offering an array of makes, models, and styles. You can conveniently filter your search to match your specific criteria, ensuring that you find the perfect car for your needs and desires.</p>
+            <p class="lead text-white">Found a car you love? Simply add it to your personal collection. Our "Save" feature allows you to curate a list of your favorite vehicles, making it easy to compare and contrast options, and share them with others when seeking advice.</p>
+            <h3>Customize Your Experience</h3>
+            <p class="lead text-white">FindIt understands that car preferences can be deeply personal. Our platform is designed to adapt to your unique taste and requirements. Whether you're looking for a sporty sedan, a spacious SUV, or a classic vintage car, you can tailor your searches to your exact specifications.</p>
+            <h3>Effortless Organization</h3>
+            <p class="lead text-white">Park your saved cars within your profile for easy access. Our platform offers simple and intuitive tools for editing and deleting your saved listings, ensuring your car shopping experience is as seamless as possible.</p>
+            <h3>Why Choose FindIt?</h3>
+            <ul>
+                <li class="lead text-white"><strong>Desktop-Based Convenience:</strong> FindIt is designed for desktop use, offering a full-featured, visually rich interface that allows for a superior car-shopping experience.</li>
+                <li class="lead text-white"><strong>Comprehensive Database:</strong> Our extensive car database ensures that you have access to a wide variety of vehicles, both new and used.</li>
+                <li class="lead text-white"><strong>User-Friendly Interface:</strong> We pride ourselves on our easy-to-navigate platform that provides a hassle-free experience for users of all levels of tech-savviness.</li>
+                <li class="lead text-white"><strong>Personalized Experience:</strong> FindIt enables you to tailor your searches, allowing you to find the car that perfectly suits your needs.</li>
+                <li class="lead text-white"><strong>Efficient Organization:</strong> Managing your saved cars has never been simpler. Edit, delete, and keep track of your favorite listings effortlessly.</li>
+            </ul>
+            <h5>Join us at FindIt, and discover the future of car shopping. We're dedicated to bringing you an unparalleled desktop-based experience, making your journey to finding the perfect car as exciting as the drive itself. Start exploring today!</h5>
+        </div>
+        
+    </body>
+</html>
