@@ -141,7 +141,6 @@ def save(id):
         Car.save(data)
     return redirect(request.referrer)
 
-
 @app.route('/unsave/<int:id>')
 def removeSaved(id):
     if 'user_id' not in session:
@@ -165,6 +164,29 @@ def savedCars():
     parkedCars = Car.getAllParkedCarsByUser(data)
     print(parkedCars, 'parked cars')
     return render_template('saved.html', parkedCars=parkedCars)
+
+@app.route('/cars/<int:id>')
+def carDetails(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    car = Car.get_car_by_id(data)
+    return render_template('details.html', car=car)
+
+@app.route('/cars/delete/<int:id>')
+def deleteCarPost(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'user_id': session['user_id'],
+        'car_id': id
+    }
+    Car.delete_car(data)
+    return redirect('/')
+    
 
 @app.route('/about')
 def about():

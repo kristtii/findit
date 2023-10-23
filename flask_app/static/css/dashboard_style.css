@@ -788,6 +788,7 @@ sidenav ul li div {
 .card-a {
     margin: auto;
     margin-top: 30px;
+    margin-bottom: 30px;
     padding: 20px;
     width: 65%;
     height: auto;
@@ -822,7 +823,7 @@ sidenav ul li div {
 
 .add-car div textarea {
     background-color: #000 !important;
-    color: #fbff08;
+    color: #fff !important;
     border: 1px solid #212121;
 }
 
@@ -841,7 +842,6 @@ sidenav ul li div {
     border: none;
     background: #fbff08;
     padding: 17px 20px;
-
     color: #000;
     cursor: pointer;
     transition: background .2s ease-in-out;

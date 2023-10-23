@@ -164,6 +164,6 @@ def dashboard():
     return render_template('dashboard.html', loggedUser=loggedUser, cars=cars, parkedCars=carsSaved)
 
 @app.route('/logout')
-def logout():
+def logout():   
     session.clear()
     return redirect('/loginRegister')

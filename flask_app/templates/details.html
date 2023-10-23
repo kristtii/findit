@@ -86,7 +86,7 @@
 						</div>
 					</li>
 				</a>
-				<a href="/">
+				<a href="/saved">
 					<li class="saved-li">
 						<div class="mail-icon">
 							<div class="mail-base">
@@ -97,54 +97,8 @@
 				</a>
 			</ul>
 		</sidenav>
-		<main>
-			{% if parkedCars|length < 1 %}
-			<div class="m-auto text-center mt-5">
-				<p class="no-cars">
-					You have no saved cars
-				</p>
-				<a class="fancy" href="/">
-					<span class="top-key"></span>
-					<span class="text color-black">Go Back</span>
-					<span class="bottom-key-1"></span>
-					<span class="bottom-key-2"></span>
-				</a>
-			</div>
-			{% endif %}
-			{% for car in parkedCars %}
-			<div class="card">
-				{% set carImages = car.images.split(',') %}
-				<img
-					src="static/UPLOADED_FOLDER/{{ carImages[0] }}"
-					alt="car"
-					class="card__image"
-					width="800px"
-					height="500px" />
-				<div class="card__content">
-					<p class="card__title">
-						{{ car.car_make }} {{ car.car_model }}
-					</p>
-					<p class="card__description">
-						Engine: {{ car.car_engine }} <br />
-						Fuel: {{ car.car_fuel }} <br />
-						Transmission: {{ car.car_transmissions }} <br />
-						Drive: {{ car.car_drive }}<br />
-						Mileage: {{ car.car_mileage }} <br />
-						Price: {{ car.car_price }}<br />
-					</p>
-					<div class="btn-group">
-						<a
-							href="/cars/{{ car.id }}"
-							class="btn btn-outline-primary"
-							>Details</a
-						>						
-						<a class="btn btn-danger" href="/unsave/{{car.id}}"
-							>Remove Saved Car</a
-						>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</main>
-	</body>
+        <div class="card-a">
+        </div>
+        
+    </body>
 </html>
