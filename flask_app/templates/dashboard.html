@@ -19,31 +19,17 @@
 			<h1 class=""><a href="/dashboard">findit.</a></h1>
 			<div class="d-flex">
 				<div class="input-wrapper">
-					<button class="icon">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							height="25px"
-							width="25px">
-							<path
-								stroke-linejoin="round"
-								stroke-linecap="round"
-								stroke-width="1.5"
-								stroke="#fff"
+					<button class="icon" id="search-icon">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="25px" width="25px">
+							<path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#fff"
 								d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"></path>
-							<path
-								stroke-linejoin="round"
-								stroke-linecap="round"
-								stroke-width="1.5"
-								stroke="#fff"
-								d="M22 22L20 20"></path>
+							<path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#fff" d="M22 22L20 20"></path>
 						</svg>
 					</button>
 					<input
 						placeholder="Search by model"
 						class="input"
-						name="text"
+						id="searchfield"
 						type="text" />
 				</div>
 				<a class="fancy" href="/logout">
@@ -119,38 +105,69 @@
 						Mileage: {{ car.car_mileage }} <br />
 						Price: {{ car.car_price }}<br />
 					</p>
-					<div class="btn-group">
-						<a
-							href="/cars/{{ car.id }}"
-							class="btn btn-outline-primary"
-							>Details</a
-						>
+					<div class="btn-group mt-5">
+						<a class="fancy" href="/cars/{{ car.id }}">
+							<span class="top-key"></span>
+							<span class="text">Details</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
 						{% if car.user_id == loggedUser.id %}
-						<a
-							href="/cars/edit/{{ car.id }}"
-							class="btn btn-outline-danger"
-							>Edit</a
-						>
-						<a
-							href="/cars/delete/{{ car.id }}"
-							class="btn btn-outline-danger"
-							>Delete</a
-						>
+						<a class="fancy" href="/cars/edit/{{ car.id }}">
+							<span class="top-key"></span>
+							<span class="text">Edit</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
+						<a class="fancy" href="/cars/delete/{{ car.id }}">
+							<span class="top-key"></span>
+							<span class="text">Delete</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
 						{% endif %}
 						
 						{% if car.id in parkedCars %}
-						<a class="btn btn-danger" href="/unsave/{{car.id}}"
-							>Remove Saved Car</a
-						>
+						<a class="fancy" href="/unsave/{{car.id}}">
+							<span class="top-key"></span>
+							<span class="text">Remove Saved</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
 						{% else %}
-						<a class="btn btn-primary" href="/save/{{car.id}}"
-							>Save Car</a
-						>
+						<a class="fancy" href="/save/{{car.id}}">
+							<span class="top-key"></span>
+							<span class="text">Save Car</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
 						{% endif %}
 					</div>
 				</div>
 			</div>
 			{% endfor %}
 		</main>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				const searchIcon = document.getElementById("search-icon");
+				const searchInput = document.getElementById("searchfield");
+			
+				searchIcon.addEventListener("click", function() {
+					performSearch();
+				});
+			
+				searchInput.addEventListener("keypress", function(event) {
+					if (event.key === "Enter") {
+						event.preventDefault(); // Prevent the form submission
+						performSearch();
+					}
+				});
+			
+				function performSearch() {
+					const searchQuery = searchInput.value;
+					window.location.href = `/results?searchfield=${searchQuery}`;
+				}
+			});
+		</script>
 	</body>
 </html>

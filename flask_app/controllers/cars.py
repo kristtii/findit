@@ -31,8 +31,6 @@ def addCar():
 @app.route('/create/car', methods=['POST'])
 def createCar():
     if 'user_id' in session:        
-        
-        
 
         images = request.files.getlist('car_images')
         image_filenames = []
@@ -137,6 +135,7 @@ def save(id):
         'car_id': id
     }
     usersWhoParkedThiscar = Car.getUserWhoParkedCars(data)
+    print(usersWhoParkedThiscar)
     if session['user_id'] not in usersWhoParkedThiscar:
         Car.save(data)
     return redirect(request.referrer)
@@ -159,10 +158,9 @@ def savedCars():
     if 'user_id' not in session:
         return redirect('/')
     data = {
-        'user_id': session['user_id']
+        'user_id': session['user_id'],
     }
     parkedCars = Car.getAllParkedCarsByUser(data)
-    print(parkedCars, 'parked cars')
     return render_template('saved.html', parkedCars=parkedCars)
 
 @app.route('/cars/<int:id>')
@@ -174,6 +172,7 @@ def carDetails(id):
         'car_id': id
     }
     car = Car.get_car_by_id(data)
+    print(car, 'car')
     return render_template('details.html', car=car)
 
 @app.route('/cars/delete/<int:id>')
@@ -184,6 +183,7 @@ def deleteCarPost(id):
         'user_id': session['user_id'],
         'car_id': id
     }
+    Car.delete_car_parkedcars(data)
     Car.delete_car(data)
     return redirect('/')
     

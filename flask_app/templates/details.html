@@ -9,6 +9,10 @@
 			type="text/css"
 			href="{{ url_for('static', filename = 'css/dashboard_style.css') }}" />
 		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static', filename = 'css/details.css') }}" />
+		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 			rel="stylesheet"
 			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -98,7 +102,79 @@
 			</ul>
 		</sidenav>
         <div class="card-a">
-        </div>
+			<div class="container">
+				<div class="car-details">
+					<h2>Car Details</h2>
+					<div class="car-detail">
+						<label>Make:</label>
+						<span>{{car.car_make}}</span>
+					</div>
+					<div class="car-detail">
+						<label>Model:</label>
+						<span>{{car.car_model}}</span>
+					</div>
+					<div class="car-detail">
+						<label>Engine:</label>
+						<span>{{car.car_engine}} cc</span>
+					</div>
+					<div class="car-detail">
+						<label>Fuel:</label>
+						<span>{{car.car_fuel}}</span>
+					</div>
+					<div class="car-detail">
+						<label>Transmission:</label>
+						<span>{{car.car_transmissions}}</span>
+					</div>
+					<div class="car-detail">
+						<label>Drive:</label>
+						<span>{{car.car_drive}}</span>
+					</div>
+				</div>
+				<div class="car-image">
+					<div class="slideshow-container">
+						{% for image in car.car_images.split(',') %}
+							<div class="mySlides">
+								<img src="../../static/UPLOADED_FOLDER/{{ image }}" alt="Car Image" width="350" height="200" />
+							</div>
+						{% endfor %}
+			
+						<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+						<a class="next" onclick="plusSlides(1)">&#10095;</a>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="car-description">
+					<h2>Description</h2>
+					<p>{{car.car_description}}</p>
+				</div>
+			</div>
+		</div>
+		<script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
         
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+        
+            function showSlides(n) {
+                let i;
+                const slides = document.getElementsByClassName("mySlides");
+        
+                if (n > slides.length) {
+                    slideIndex = 1;
+                }
+                if (n < 1) {
+                    slideIndex = slides.length;
+                }
+        
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+        
+                slides[slideIndex - 1].style.display = "block";
+            }
+        </script>
     </body>
 </html>

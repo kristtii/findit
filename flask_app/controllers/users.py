@@ -163,6 +163,21 @@ def dashboard():
     carsSaved = Car.getUserWhoParkedCars(loggedUserData)
     return render_template('dashboard.html', loggedUser=loggedUser, cars=cars, parkedCars=carsSaved)
 
+@app.route('/results', methods=['GET', 'POST'])
+def search():
+    if 'user_id' not in session:
+        return redirect('/')
+
+    search_query = request.args.get('searchfield', default='')
+
+    cars = []
+
+    print(search_query, 'we are at search')
+    if search_query:
+        cars = Car.search(search_query)
+        print(cars, 'we are at cars')
+    return render_template('results.html', cars=cars)
+
 @app.route('/logout')
 def logout():   
     session.clear()

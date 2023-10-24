@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Dashboard</title>
+		<title>Search</title>
 		<link
 			rel="stylesheet"
 			type="text/css"
@@ -19,31 +19,17 @@
 			<h1 class=""><a href="/dashboard">findit.</a></h1>
 			<div class="d-flex">
 				<div class="input-wrapper">
-					<button class="icon">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							height="25px"
-							width="25px">
-							<path
-								stroke-linejoin="round"
-								stroke-linecap="round"
-								stroke-width="1.5"
-								stroke="#fff"
+					<button class="icon" id="search-icon">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="25px" width="25px">
+							<path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#fff"
 								d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"></path>
-							<path
-								stroke-linejoin="round"
-								stroke-linecap="round"
-								stroke-width="1.5"
-								stroke="#fff"
-								d="M22 22L20 20"></path>
+							<path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#fff" d="M22 22L20 20"></path>
 						</svg>
 					</button>
 					<input
 						placeholder="Search by model"
 						class="input"
-						name="text"
+						id="searchfield"
 						type="text" />
 				</div>
 				<a class="fancy" href="/logout">
@@ -98,10 +84,10 @@
 			</ul>
 		</sidenav>
 		<main>
-			{% if parkedCars|length < 1 %}
+			{% if cars|length < 1 %}
 			<div class="m-auto text-center mt-5">
 				<p class="no-cars">
-					You have no saved cars
+					Search found 0 results :(
 				</p>
 				<a class="fancy" href="/">
 					<span class="top-key"></span>
@@ -111,7 +97,7 @@
 				</a>
 			</div>
 			{% endif %}
-			{% for car in parkedCars %}
+			{% for car in cars %}
 			<div class="card">
 				{% set carImages = car.images.split(',') %}
 				<img
@@ -132,10 +118,45 @@
 						Mileage: {{ car.car_mileage }} <br />
 						Price: {{ car.car_price }}<br />
 					</p>
-					
+					<div class="btn-group mt-5">
+						<a class="fancy" href="/cars/{{ car.id }}">
+							<span class="top-key"></span>
+							<span class="text">Details</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>					
+						<a class="fancy" href="/unsave/{{car.id}}">
+							<span class="top-key"></span>
+							<span class="text">Remove Saved</span>
+							<span class="bottom-key-1"></span>
+							<span class="bottom-key-2"></span>
+						</a>
+					</div>
 				</div>
 			</div>
 			{% endfor %}
 		</main>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				const searchIcon = document.getElementById("search-icon");
+				const searchInput = document.getElementById("searchfield");
+			
+				searchIcon.addEventListener("click", function() {
+					performSearch();
+				});
+			
+				searchInput.addEventListener("keypress", function(event) {
+					if (event.key === "Enter") {
+						event.preventDefault(); // Prevent the form submission
+						performSearch();
+					}
+				});
+			
+				function performSearch() {
+					const searchQuery = searchInput.value;
+					window.location.href = `/results?searchfield=${searchQuery}`;
+				}
+			});
+		</script>
 	</body>
 </html>

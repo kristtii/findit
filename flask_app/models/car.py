@@ -29,6 +29,35 @@ class Car:
         return cars
     
     @classmethod
+    def search(cls, search_query):
+
+        query = f"""
+            SELECT carposts.id as id, carposts.car_make as car_make, carposts.car_model as car_model, 
+                carposts.car_engine as car_engine, carposts.car_fuel as car_fuel, 
+                carposts.car_transmissions as car_transmissions, carposts.car_drive as car_drive, 
+                carposts.car_description as car_description, carposts.car_mileage as car_mileage, 
+                carposts.car_price as car_price, carposts.car_images as images, carposts.user_id as user_id
+            FROM carposts
+            LEFT JOIN parkedcars ON carposts.id = parkedcars.carPost_id
+            WHERE carposts.car_make LIKE '{search_query}%'
+            GROUP BY carposts.id;
+        """
+
+        try:
+            results = connectToMySQL(cls.db_name).query_db(query)
+
+            cars = []
+            if results:
+                for car in results:
+                    cars.append(car)
+            return cars
+
+        except Exception as e:
+            print("An error occurred:", str(e))
+            return []
+
+
+    @classmethod
     def createCarPost(cls, data):
         query = "INSERT INTO carposts (car_make, car_model, car_engine, car_fuel, car_transmissions, car_drive, car_mileage, car_price, car_images, car_description, user_id) VALUES (%(car_make)s, %(car_model)s, %(car_engine)s, %(car_fuel)s, %(car_transmissions)s, %(car_drive)s, %(car_mileage)s, %(car_price)s, %(car_images)s, %(car_description)s, %(user_id)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
@@ -48,7 +77,7 @@ class Car:
     
     @classmethod
     def delete_car_parkedcars(cls, data):
-        query = "DELETE from parkedcars WHERE car_id = %(car_id)s;"
+        query = "DELETE from parkedcars WHERE carPost_id = %(car_id)s;"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     @classmethod
